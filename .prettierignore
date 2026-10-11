@@ -1,0 +1,27 @@
+# VCS directories
+**/.git
+**/.svn
+**/.hg
+
+# Node dependencies
+**/node_modules
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Build output
+dist
+build
+out
+coverage
+
+# IDE/editor settings
+.vscode
+.idea
+
+# OS-specific files
+.DS_Store
+Thumbs.db
