@@ -30,10 +30,8 @@ export function hashObject(
 
         const blob = blobObject(fileContent);
         const hash = crypto.createHash("sha1").update(blob).digest("hex");
-        if (!writeFlag) {
-            process.stdout.write(hash);
-            return;
-        }
+        process.stdout.write(hash);
+        if (!writeFlag) return;
         const dirname = hash.slice(0, 2);
         const objDir = path.join(GIT_DIR, "objects", dirname);
         const filename = hash.slice(2);
