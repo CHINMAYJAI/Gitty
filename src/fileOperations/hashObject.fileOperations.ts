@@ -7,7 +7,7 @@ import { blobObject } from "../objects/index.objects";
 1. check for existence of file
 2. read the file
 3. create the blob
-4. calculate the hash (on plain data)
+4. calculate the hash (on content+header)
 5. if -w flag is there then store the hash (compressed blob)
 */
 export function hashObject(
@@ -15,9 +15,9 @@ export function hashObject(
     WORK_DIR: string,
     filePath: string | undefined,
     writeFlag: boolean
-) {
+): string | null {
     try {
-        if (!filePath) return;
+        if (!filePath) return null;
 
         const absoluteFilePath = path.resolve(WORK_DIR, filePath);
 
@@ -29,17 +29,17 @@ export function hashObject(
         const fileContent = fs.readFileSync(absoluteFilePath);
 
         const blob = blobObject(fileContent);
-        const hash = crypto.createHash("sha1").update(blob).digest("hex");
-        process.stdout.write(hash);
-        if (!writeFlag) return;
-        const dirname = hash.slice(0, 2);
+        const hashCode = crypto.createHash("sha1").update(blob).digest("hex");
+        if (!writeFlag) return hashCode;
+        const dirname = hashCode.slice(0, 2);
         const objDir = path.join(GIT_DIR, "objects", dirname);
-        const filename = hash.slice(2);
+        const filename = hashCode.slice(2);
         const objPath = path.join(objDir, filename);
         if (!fs.existsSync(objPath)) {
             fs.mkdirSync(objDir, { recursive: true });
             fs.writeFileSync(objPath, zlib.deflateSync(blob));
         }
+        return hashCode;
     } catch (error) {
         process.stderr.write((error as Error).message + "\n");
         process.exit(1);

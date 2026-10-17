@@ -15,7 +15,13 @@ switch (command) {
     case "hash-object":
         const writeFlag = args.includes("-w");
         const filePath = args.find((arg) => arg !== "-w");
-        hashObject(GIT_DIR, WORK_DIR, filePath, writeFlag);
+        const hashCode: string | null = hashObject(
+            GIT_DIR,
+            WORK_DIR,
+            filePath,
+            writeFlag
+        );
+        if (hashCode !== null) process.stdout.write(`${hashCode}\n`);
         break;
     case "cat-file":
         const flag = args[0];
