@@ -15,15 +15,15 @@ export function initRepo(GIT_DIR: string) {
             // create HEAD file
             fs.writeFileSync(headPath, "ref: refs/heads/main\n");
             process.stdout.write(
-                `Initialized empty gitty repository in ${GIT_DIR}`
+                `Initialized empty gitty repository in ${GIT_DIR}\n`
             );
             return;
         }
         process.stdout.write(
-            `Reinitialized existing Git repository in ${GIT_DIR}`
+            `Reinitialized existing Git repository in ${GIT_DIR}\n`
         );
     } catch (error) {
-        process.stderr.write(`fatal: error occurred\n${error}`);
+        process.stderr.write(`fatal: error occurred\n${error}\n`);
         process.exit(1);
     }
 }
