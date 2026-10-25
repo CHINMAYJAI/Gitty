@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import crypto from "node:crypto";
 import zlib from "node:zlib";
+import { hashFileObject } from "../utils/hashing/hashFileObject.utils";
 import { blobObject } from "../objects/index.objects";
 /*
 1. check for existence of file
@@ -29,7 +29,7 @@ export function hashObject(
         const fileContent = fs.readFileSync(absoluteFilePath);
 
         const blob = blobObject(fileContent);
-        const hashCode = crypto.createHash("sha1").update(blob).digest("hex");
+        const hashCode = hashFileObject(blob);
         if (!writeFlag) return hashCode;
         const dirname = hashCode.slice(0, 2);
         const objDir = path.join(GIT_DIR, "objects", dirname);
