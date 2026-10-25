@@ -1,6 +1,7 @@
 import path from "node:path";
 import { hashObject } from "./src/fileOperations/hashObject.fileOperations";
 import { initRepo, catFile } from "./src/commands/index.commands";
+import { writeTreeCmd } from "./src/commands/tree/write-tree.commands";
 
 // fetch gitty command by destructuring it
 const [, , command, ...args] = process.argv;
@@ -43,6 +44,10 @@ switch (command) {
             );
         }
         catFile(commitHash, flag);
+        break;
+    case "write-tree":
+        const sha = writeTreeCmd();
+        if (sha) process.stdout.write(sha);
         break;
     default:
         throw new Error(`error: unknown command: ${command}`);
