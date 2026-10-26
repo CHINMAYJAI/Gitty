@@ -47,7 +47,7 @@ switch (command) {
         break;
     case "write-tree":
         const sha = writeTreeCmd();
-        if (sha) process.stdout.write(sha);
+        if (sha) process.stdout.write(`${sha}\n`);
         break;
     default:
         throw new Error(`error: unknown command: ${command}`);
