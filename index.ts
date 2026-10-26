@@ -1,7 +1,7 @@
 import path from "node:path";
 import { hashObject } from "./src/fileOperations/hashObject.fileOperations";
 import { initRepo, catFile } from "./src/commands/index.commands";
-import { writeTreeCmd } from "./src/commands/tree/write-tree.commands";
+import { writeTreeCmd } from "./src/commands/tree/index.tree";
 
 // fetch gitty command by destructuring it
 const [, , command, ...args] = process.argv;
