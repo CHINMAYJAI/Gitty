@@ -1,6 +1,6 @@
 import path from "node:path";
 import { hashObject } from "./src/fileOperations/hashObject.fileOperations";
-import { initRepo, catFile } from "./src/commands/index.commands";
+import { initRepo, catFile, addFile } from "./src/commands/index.commands";
 import { writeTreeCmd } from "./src/commands/tree/index.tree";
 
 // fetch gitty command by destructuring it
@@ -48,6 +48,10 @@ switch (command) {
     case "write-tree":
         const sha = writeTreeCmd();
         if (sha) process.stdout.write(`${sha}\n`);
+        break;
+    case "add":
+        const paths: string[] = process.argv.slice(3);
+        addFile(GIT_DIR, WORK_DIR, paths);
         break;
     default:
         throw new Error(`error: unknown command: ${command}`);
